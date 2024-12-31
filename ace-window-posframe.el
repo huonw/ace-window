@@ -27,12 +27,13 @@
          (bufname (format " *aw-posframe-buffer-%s*" path)))
     (with-selected-window wnd
       (push bufname aw--posframe-frames)
-      (posframe-show bufname
-                     :string str
-                     :poshandler aw-posframe-position-handler
-                     :font (face-font 'aw-leading-char-face)
-                     :foreground-color (face-foreground 'aw-leading-char-face nil t)
-                     :background-color (face-background 'aw-leading-char-face nil t)))))
+      (let ((face (if (window-minibuffer-p wnd) 'aw-minibuffer-leading-char-face 'aw-leading-char-face)))
+        (posframe-show bufname
+                       :string str
+                       :poshandler aw-posframe-position-handler
+                       :font (face-font face)
+                       :foreground-color (face-foreground face nil t)
+                       :background-color (face-background face nil t))))))
 
 (defun aw--remove-leading-chars-posframe ()
   ;; Hide rather than delete. See aw--lead-overlay-posframe for why.
